@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://janaqiegav5d"]
+
+[ext_resource type="Texture2D" uid="uid://dmdm4cwpsaybb" path="res://Assests/PNG/Survivor 1/survivor1_gun.png" id="1_hrow0"]
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rlfwv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kbfqx"]
+radius = 20.14
+
+[node name="player" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_rlfwv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(8, -1)
+texture = ExtResource("1_hrow0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_kbfqx")
+
+[node name="end_of_gun" type="Marker2D" parent="."]
+position = Vector2(34.865, 8.88)
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 0.01
+
+[node name="WalkingSound" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

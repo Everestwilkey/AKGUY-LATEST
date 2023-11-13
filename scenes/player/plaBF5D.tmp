@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://janaqiegav5d"]
+
+[ext_resource type="Texture2D" uid="uid://dmdm4cwpsaybb" path="res://Assests/PNG/Survivor 1/survivor1_gun.png" id="1_hrow0"]
+
+[sub_resource type="GDScript" id="GDScript_b7ad6"]
+script/source = "extends CharacterBody2D
+const MAX_SPEED = 200
+const speed = 400
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+
+	velocity = get_input().normalized()
+	move_and_slide()
+
+
+#func get_movement_vector():
+#	var x_movment = Input.get_action_strength(\"Right\") - Input.get_action_strength(\"left\")
+#	var y_movment = Input.get_action_strength(\"down\") - Input.get_action_strength(\"up\")
+#
+#	return Vector2(x_movment,y_movment)
+func get_input():
+	look_at(get_global_mouse_position())
+	if Input.is_action_just_pressed(\"Right\") or Input.is_action_just_pressed(\"left\"):
+		velocity = transform.y * Input.get_axis(\"Right\", \"left\") * speed
+		return velocity
+	else:
+		velocity = transform.x * Input.get_axis(\"down\", \"up\") * speed
+		return velocity
+
+
+func fire():
+	if Input.get_action_strength(\"Fire\"):
+		pass
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kbfqx"]
+radius = 20.14
+
+[node name="CharacterBody2D" type="CharacterBody2D" groups=["player"]]
+script = SubResource("GDScript_b7ad6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(8, -1)
+texture = ExtResource("1_hrow0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 1)
+shape = SubResource("CircleShape2D_kbfqx")

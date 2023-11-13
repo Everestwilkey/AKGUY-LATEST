@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://dsng1a565twhd"]
+
+[ext_resource type="Script" path="res://scenes/Enemy/Enemy.gd" id="1_juct4"]
+[ext_resource type="Texture2D" uid="uid://tx1e4cqnasav" path="res://Assests/PNG/Soldier 1/soldier1_gun.png" id="1_vnlek"]
+[ext_resource type="Script" path="res://scenes/Enemy/detection.gd" id="2_c70o0"]
+[ext_resource type="AudioStream" uid="uid://dumo43v06a0y0" path="res://sound/Brigham Young University - Idaho 16.mp3" id="4_4eull"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_taqfs"]
+radius = 25.02
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fgu4t"]
+radius = 502.487
+
+[node name="Mob" type="CharacterBody2D" groups=["enemy"]]
+script = ExtResource("1_juct4")
+
+[node name="body" type="Sprite2D" parent="." groups=["enemy"]]
+texture = ExtResource("1_vnlek")
+
+[node name="mobbody" type="CollisionShape2D" parent="." groups=["enemy"]]
+position = Vector2(-5, 1)
+shape = SubResource("CircleShape2D_taqfs")
+
+[node name="detection" type="Area2D" parent="." groups=["enemy"]]
+script = ExtResource("2_c70o0")
+
+[node name="RayCast2D" type="RayCast2D" parent="detection" groups=["enemy"]]
+target_position = Vector2(254, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection" groups=["enemy"]]
+position = Vector2(1, -1)
+shape = SubResource("CircleShape2D_fgu4t")
+one_way_collision_margin = 0.0
+
+[node name="end_of_gun" type="Marker2D" parent="." groups=["enemy"]]
+position = Vector2(34.865, 8.88)
+
+[node name="Shoot _timer" type="Timer" parent="." groups=["enemy"]]
+wait_time = 0.15
+
+[node name="Wander_timer" type="Timer" parent="." groups=["enemy"]]
+
+[node name="shootsound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_4eull")
+
+[connection signal="body_entered" from="detection" to="." method="_on_detection_body_entered"]
+[connection signal="timeout" from="Shoot _timer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="timeout" from="Wander_timer" to="." method="_on_wander_timer_timeout"]

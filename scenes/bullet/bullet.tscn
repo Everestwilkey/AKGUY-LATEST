@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmdpt2c130q6j"]
+
+[ext_resource type="Texture2D" uid="uid://cvkr4ocvby5ka" path="res://Assests/bullets/PNG/Default size/bulletRed1.png" id="1_4sxj7"]
+[ext_resource type="Script" path="res://scenes/bullet/bullet.gd" id="1_mmqdg"]
+[ext_resource type="AudioStream" uid="uid://dumo43v06a0y0" path="res://sound/Brigham Young University - Idaho 16.mp3" id="3_vbm54"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fwigd"]
+size = Vector2(10, 5)
+
+[node name="bullet" type="Area2D"]
+rotation = -1.5708
+script = ExtResource("1_mmqdg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(2, 2)
+texture = ExtResource("1_4sxj7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.55328e-14, 2.92061e-07)
+rotation = 3.14159
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_fwigd")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(0.38977, 0)
+rotation = 1.5708
+scale = Vector2(0.482165, 1)
+
+[node name="shootsound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_vbm54")
+pitch_scale = 4.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]
